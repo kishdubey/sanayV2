@@ -113,7 +113,7 @@ def leave(data):
     send({"msg": username + " has left the room"}, room=room)
 
 def predict(text):
-    return f"100"
+    return "100"
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

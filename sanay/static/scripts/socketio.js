@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Incoming message
   socket.on('message', data => {
+
     if (data.msg) {
       const p = document.createElement('p');
       const span_username = document.createElement('span');
@@ -49,17 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
           color = "red";
           predict.innerHTML = "Negative, "+data.prediction*-1+"%";
         }
-
         predict.style.color = color;
         p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML + br.outerHTML + predict.outerHTML;
-
-        console.log(p.innerHTML);
-
         document.querySelector('#display-message-section').append(p);
       }
       // Display other users' messages
       else if (typeof data.username !== 'undefined') {
-        console.log("done");
         p.setAttribute("class", "others-msg");
 
         span_username.setAttribute("class", "other-username");
@@ -77,17 +73,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.prediction > 0){
           color = "green";
           predict.innerHTML = "Positive, "+data.prediction+"%";
-        }
-        else if (data.prediction < 0){
+       }
+
+       else if (data.prediction < 0){
           color = "red";
           predict.innerHTML = "Negative, "+data.prediction*-1+"%";
         }
+
         predict.style.color = color;
         p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML + br.outerHTML + predict.outerHTML;
-
         document.querySelector('#display-message-section').append(p);
-    }
-      else {
+
+     } else {
         printSysMsg(data.msg);
       }
     }

@@ -53,12 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
         predict.style.color = color;
         p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML + br.outerHTML + predict.outerHTML;
 
-        console.log("here");
+        console.log(p.innerHTML);
 
         document.querySelector('#display-message-section').append(p);
       }
       // Display other users' messages
       else if (typeof data.username !== 'undefined') {
+        console.log("done");
         p.setAttribute("class", "others-msg");
 
         span_username.setAttribute("class", "other-username");
@@ -80,18 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (data.prediction < 0){
           color = "red";
           predict.innerHTML = "Negative, "+data.prediction*-1+"%";
-
+        }
         predict.style.color = color;
         p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML + br.outerHTML + predict.outerHTML;
 
         document.querySelector('#display-message-section').append(p);
-        console.log("done");
-      }
     }
       else {
         printSysMsg(data.msg);
       }
-
     }
     scrollDownChatWindow();
   });

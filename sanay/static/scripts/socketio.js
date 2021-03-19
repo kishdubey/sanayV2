@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else {
         printSysMsg(data.msg);
       }
+
     }
     scrollDownChatWindow();
   });

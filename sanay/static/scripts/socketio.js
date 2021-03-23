@@ -37,20 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         span_timestamp.innerText = data.time_stamp;
 
         predict.setAttribute("class", "timestamp");
-        predict.innerHTML = "";
+        predict.innerHTML = "Emotion: "+data.prediction;
+        predict.style.color = 'blue';
 
-        // setting prediction color
-        let color = "black";
-        if (data.prediction > 0){
-          color = "green";
-          predict.innerHTML = "Positive, "+data.prediction+"%";
-
-        }
-        else if (data.prediction < 0){
-          color = "red";
-          predict.innerHTML = "Negative, "+data.prediction*-1+"%";
-        }
-        predict.style.color = color;
         p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML + br.outerHTML + predict.outerHTML;
         document.querySelector('#display-message-section').append(p);
       }
@@ -66,21 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
         span_timestamp.innerText = data.time_stamp;
 
         predict.setAttribute("class", "timestamp");
-        predict.innerHTML = "";
+        predict.innerHTML = "Emotion: "+data.prediction;
+        predict.style.color = 'blue';
 
-        // setting prediction color
-        let color = "black";
-        if (data.prediction > 0){
-          color = "green";
-          predict.innerHTML = "Positive, "+data.prediction+"%";
-       }
-
-       else if (data.prediction < 0){
-          color = "red";
-          predict.innerHTML = "Negative, "+data.prediction*-1+"%";
-        }
-
-        predict.style.color = color;
         p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML + br.outerHTML + predict.outerHTML;
         document.querySelector('#display-message-section').append(p);
 

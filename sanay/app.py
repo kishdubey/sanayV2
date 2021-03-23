@@ -6,6 +6,11 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from forms import *
 from models import *
 
+import pickle
+import tensorflow as tf
+from  keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+
 from time import localtime, strftime
 
 # Initiate App
@@ -90,7 +95,7 @@ def message(data):
     username = data['username']
     room = data['room']
     time_stamp = strftime('%b-%d %I:%M%p', localtime())
-    prediction = predict(msg)
+    prediction = predict(msg, 'tf_models/tokenizer.pickle', 'tf_models/bilstm.h5')
 
     send({'msg': msg, 'username': username, 'time_stamp': time_stamp, 'prediction': prediction}, room=room)
 
@@ -112,8 +117,25 @@ def leave(data):
 
     send({"msg": username + " has left the room"}, room=room)
 
-def predict(text):
-    return "100"
+def _get_key(value):
+    dictionary={'Joy':0,'Anger':1,'Love':2,'Sadness':3,'Fear':4,'Surprise':5}
+    for key,val in dictionary.items():
+          if (val==value):
+            return key
+
+def predict(text, tokenizer, model):
+    with open(tokenizer, 'rb') as handle:
+        tokenizer = pickle.load(handle)
+
+    model = tf.keras.models.load_model(model)
+
+    sent_list = []
+    sent_list.append(text)
+    sent_seq = tokenizer.texts_to_sequences(sent_list)
+    sentence_padded = pad_sequences(sent_seq, maxlen = 80, padding='post')
+    prediction = _get_key(model.predict_classes(sentence_padded))
+    print(prediction)
+    return prediction
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

@@ -7,6 +7,7 @@ from forms import *
 from models import *
 
 import pickle
+import numpy as np
 import tensorflow as tf
 from  keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -133,7 +134,7 @@ def predict(text, tokenizer, model):
     sent_list.append(text)
     sent_seq = tokenizer.texts_to_sequences(sent_list)
     sentence_padded = pad_sequences(sent_seq, maxlen = 80, padding='post')
-    prediction = _get_key(model.predict_classes(sentence_padded))
+    prediction = _get_key(np.argmax(model.predict(sentence_padded), axis=-1))
     print(prediction)
     return prediction
 
